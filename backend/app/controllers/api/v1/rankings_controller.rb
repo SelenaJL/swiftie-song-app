@@ -1,6 +1,8 @@
 class Api::V1::RankingsController < ApplicationController
+  before_action :authenticate_request!
+
   def create
-    @ranking = Ranking.new(ranking_params)
+    @ranking = current_user.rankings.new(ranking_params)
     if @ranking.save
       render json: @ranking, status: :created
     else
@@ -9,7 +11,7 @@ class Api::V1::RankingsController < ApplicationController
   end
 
   def update
-    @ranking = Ranking.find(params[:id])
+    @ranking = current_user.rankings.find(params[:id])
     if @ranking.update(ranking_params)
       render json: @ranking
     else
@@ -20,6 +22,6 @@ class Api::V1::RankingsController < ApplicationController
   private
 
   def ranking_params
-    params.require(:ranking).permit(:song_id, :tier_id, :user_id)
+    params.require(:ranking).permit(:song_id, :tier_id)
   end
 end

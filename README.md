@@ -48,7 +48,7 @@ Here is a high-level plan breaking down the development process into logical ste
 ### **Phase 3: Integrating Core Features**
 
 8.  **User Authentication:**
-    *   **Backend:** Set up `devise-jwt` or a similar gem on Rails to handle token-based authentication.
+    *   **Backend:** Implement token-based authentication using `has_secure_password` for password management and the `jwt` gem for token generation and validation.
     *   **Frontend:** Create Login and Signup pages. When a user logs in, store the received JWT (JSON Web Token) and include it in the header of all subsequent API requests.
 
 9.  **Spotify Integration:**
@@ -61,3 +61,15 @@ Here is a high-level plan breaking down the development process into logical ste
     *   Implement the logic to calculate an album's score based on the tiers of its songs (e.g., S=4pts, A=3pts, etc.).
     *   Create a dashboard or results page where users can see their calculated scores for each album.
     *   Build the navigation to allow users to move between ranking different albums.
+
+## Technical Decisions
+
+### Authentication Strategy
+
+For user authentication, we opted for a token-based approach using Rails' built-in `has_secure_password` for password management and the `jwt` gem for JSON Web Token (JWT) generation and validation. This decision was made for the following reasons:
+
+*   **Lightweight and API-Centric:** Unlike full-fledged authentication frameworks (e.g., Devise), this combination is more lightweight and better suited for API-only applications. It avoids the overhead of session management, which is not necessary for a stateless API.
+*   **Clear Separation of Concerns:** It promotes a clean separation between the backend (handling authentication logic and token issuance) and the frontend (responsible for storing and sending the JWT).
+*   **Scalability:** By being stateless, the API can scale more easily as it doesn't need to maintain session information across multiple servers.
+*   **Flexibility:** This approach provides greater control over the authentication flow, allowing for custom implementations tailored to the application's specific needs.
+*   **Modern Web Practices:** Token-based authentication is a standard and secure practice for modern single-page applications and mobile clients.
