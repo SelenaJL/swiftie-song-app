@@ -5,8 +5,8 @@ module Authenticable
     header = request.headers['Authorization']
     return nil if header.nil?
 
-    decoded_token = decode_token(header)
-    @current_user = User.find(decoded_token[:user_id]) if decoded_token
+    user_id = decode_token(header)['user_id']
+    @current_user = User.find(user_id) if user_id
   rescue JWT::DecodeError
     nil
   end

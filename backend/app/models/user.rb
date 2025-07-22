@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :rankings
   has_secure_password
-  validates :email, uniqueness: true
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true
 end

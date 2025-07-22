@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  tier: MyString
+user_one_song_one:
+  user: one
   song: one
+  tier: one
 
-two:
-  tier: MyString
+user_two_song_two:
+  user: two
   song: two
+  tier: two

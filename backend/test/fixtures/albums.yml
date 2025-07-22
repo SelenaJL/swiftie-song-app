@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  release_year: 1
+  title: "Album 1"
+  release_year: 2001
+  color: "red"
 
 two:
-  title: MyString
-  release_year: 1
+  title: "Album 2"
+  release_year: 2002
+  color: "yellow"

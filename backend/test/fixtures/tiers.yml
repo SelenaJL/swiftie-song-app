@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  description: MyText
-  value: 1
+  name: "Tier 1"
+  description: "Perfect songs"
+  value: 2
 
 two:
-  name: MyString
-  description: MyText
+  name: "Tier 2"
+  description: "Great songs"
   value: 1
