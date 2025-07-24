@@ -43,7 +43,7 @@ This app allows users to rank Taylor Swift songs from each of her albums to disc
 ### **Phase 3: Core Features**
 
 6.  **User Authentication:**
-    * [ ] **Backend:** Implement token-based authentication using `has_secure_password` for password management and the `jwt` gem for token generation and validation.
+    * [x] **Backend:** Implement token-based authentication using `has_secure_password` for password management and the `jwt` gem for token generation and validation.
     * [ ] **Frontend:** Create Login and Signup pages. When a user logs in, store the received JWT (JSON Web Token) and include it in the header of all subsequent API requests.
 
 7.  **Spotify Integration:**
@@ -59,6 +59,8 @@ This app allows users to rank Taylor Swift songs from each of her albums to disc
 ### Tech Stack
 
 **Backend**: I chose Ruby on Rails which is a robust and convention-over-configuration framework that accelerates API development. Its ActiveRecord ORM simplifies database interactions and the strong ecosystem of gems allows for rapid integration of core functionality.
+
+**Database**: I chose **SQLite** which is file-based and doesn't require a separate server process. This is convenient for local development, testing, and small-scale deployments. Rails makes it easy to move to a more robust, client-server relational database management system like PostgreSQL or MySQL later if the amount of traffic justifies features like replication, clustering, and high concurrency.
 
 **API**: I chose a RESTful API for its simplicity, widespread adoption, and stateless nature which promotes scalability and clear separation between frontend / backend. Alternatives like GraphQL (more complex), SOAP (overly verbose), and RPC (less standardized) weren't suitable for this project's requirements.
 
