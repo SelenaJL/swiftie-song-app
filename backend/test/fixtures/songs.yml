@@ -4,7 +4,6 @@ one:
   title: "Song 1"
   album: one
   spotify_track_id: "12345"
-  rerecorded: false
   from_the_vault: false
   feature: nil
 
@@ -12,6 +11,5 @@ two:
   title: "Song 2"
   album: two
   spotify_track_id: "67890"
-  rerecorded: false
   from_the_vault: false
   feature: nil

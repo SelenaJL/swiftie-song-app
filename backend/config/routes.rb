@@ -8,8 +8,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :tiers, only: [:index]
-      resources :albums, only: [:index] do
+      resources :albums, only: [:index, :show] do
         get 'songs', on: :member
+        resources :rankings, only: [:index]
       end
       resources :rankings, only: [:create, :update]
       post '/register', to: 'authentication#register'

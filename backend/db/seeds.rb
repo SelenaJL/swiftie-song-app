@@ -2,11 +2,14 @@
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 
+# TODO: Remove temporary user after testing.
+User.find_or_create_by!(name: "Test User", email: "test@example.com", password_digest: "password")
+
 # Create tiers
-Tier.find_or_create_by!(name: "Mastermind", description: "Songs you'd play on repeat because they're iconic.", value: 3)
-Tier.find_or_create_by!(name: "Gorgeous", description: "Songs you'd recommend to others.", value: 2)
-Tier.find_or_create_by!(name: "Nothing New", description: "Songs you'd listen to.", value: 1)
-Tier.find_or_create_by!(name: "I Forgot That You Existed", description: "Songs you'd skip.", value: 0)
+Tier.find_or_create_by!(name: "Tier 1: Mastermind", description: "Songs you'd play on repeat.", value: 3)
+Tier.find_or_create_by!(name: "Tier 2: Gorgeous", description: "Songs you'd recommend to others.", value: 2)
+Tier.find_or_create_by!(name: "Tier 3: Nothing New", description: "Songs you'd listen to.", value: 1)
+Tier.find_or_create_by!(name: "Tier 4: I Forgot That You Existed", description: "Songs you'd skip.", value: 0)
 
 # Create albums
 taylor_swift = Album.find_or_create_by!(title: "Taylor Swift", release_year: 2006, color: "teal")

@@ -1,7 +1,12 @@
 class Api::V1::AlbumsController < ApplicationController
   def index
-    @albums = Album.all
+    @albums = Album.all.order(:id)
     render json: @albums
+  end
+
+  def show
+    @album = Album.find(params[:id])
+    render json: @album
   end
 
   def songs
