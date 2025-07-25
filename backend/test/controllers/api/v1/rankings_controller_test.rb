@@ -62,4 +62,27 @@ class Api::V1::RankingsControllerTest < ActionDispatch::IntegrationTest
     get api_v1_album_rankings_url(@album)
     assert_response :unauthorized
   end
+
+  test "should destroy ranking" do
+    assert_difference('Ranking.count', -1) do
+      delete api_v1_ranking_url(@ranking), headers: { 'Authorization' => @token }
+    end
+    assert_response :no_content
+  end
+
+  test "destroy ranking fails for incorrect user" do
+    user = users(:two)
+    token = JWT.encode({ user_id: user.id }, Rails.application.credentials.secret_key_base)
+    assert_no_difference('Ranking.count') do
+      delete api_v1_ranking_url(@ranking), headers: { 'Authorization' => token }
+    end
+    assert_response :not_found
+  end
+
+  test "destroy ranking fails without user" do
+    assert_no_difference('Ranking.count') do
+      delete api_v1_ranking_url(@ranking)
+    end
+    assert_response :unauthorized
+  end
 end

@@ -24,6 +24,12 @@ class Api::V1::RankingsController < ApplicationController
     end
   end
 
+  def destroy
+    @ranking = current_user.rankings.find(params[:id])
+    @ranking.destroy
+    head :no_content
+  end
+
   private
 
   def ranking_params

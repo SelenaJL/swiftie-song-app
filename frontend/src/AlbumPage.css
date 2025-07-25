@@ -44,6 +44,12 @@
   border-radius: 4px;
 }
 
+.ranked-songs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
 .song-card {
   background-color: #fff;
   padding: 10px;

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
         get 'songs', on: :member
         resources :rankings, only: [:index]
       end
-      resources :rankings, only: [:create, :update]
+      resources :rankings, only: [:create, :update, :destroy]
       post '/register', to: 'authentication#register'
       post '/login', to: 'authentication#login'
     end

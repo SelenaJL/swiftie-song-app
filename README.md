@@ -30,15 +30,15 @@ This app allows users to rank Taylor Swift songs from each of her albums to disc
 ### **Phase 2: Frontend App (React)**
 
 4.  **Project Setup:**
-    * [ ] Use `Create React App` to bootstrap a new React application.
-    * [ ] Install necessary libraries like `axios` for API calls and `react-router-dom` for navigation.
+    * [x] Use `Create React App` to bootstrap a new React application.
+    * [x] Install necessary libraries like `axios` for API calls and `react-router-dom` for navigation.
 
 5.  **Drag-and-Drop Functionality:**
-    * [ ] Create basic UI components:
-        * [ ] `AlbumPage`: A page to fetch and display the ranked and unranked songs for a given album.
-        * [ ] `SongCard`: A draggable card representing a single song.
-    * [ ] Integrate a library like `react-beautiful-dnd` to enable dragging songs from a list and dropping them into the different tier components.
-    * [ ] When a user drops a song, update the component's state and send the new ranking to the Rails API.
+    * [x] Create basic UI components:
+        * [x] `AlbumPage`: A page to fetch and display the ranked and unranked songs for a given album.
+        * [x] `SongCard`: A draggable card representing a single song.
+    * [x] Integrate a library like `react-beautiful-dnd` to enable dragging songs from a list and dropping them into the different tier components.
+    * [x] When a user drops a song, update the component's state and send the new ranking to the Rails API.
 
 ### **Phase 3: Core Features**
 
