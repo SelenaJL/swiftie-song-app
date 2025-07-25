@@ -1,0 +1,38 @@
+/* frontend/src/SongCard.css */
+
+.song-card-container {
+  position: relative;
+  /* Existing song-card styles will be applied via AlbumPage.css */
+}
+
+.ftv-indicator {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.7em;
+  font-weight: bold;
+  color: #555;
+}
+
+.song-card {
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.song-card h3 {
+  margin: 0;
+  font-size: 1em;
+}
+
+.song-card p {
+  margin: 0;
+  font-size: 0.8em;
+  color: #666;
+}

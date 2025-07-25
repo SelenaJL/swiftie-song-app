@@ -6,23 +6,23 @@
 User.find_or_create_by!(name: "Test User", email: "test@example.com", password_digest: "password")
 
 # Create tiers
-Tier.find_or_create_by!(name: "Tier 1: Mastermind", description: "Songs you'd play on repeat.", value: 3)
-Tier.find_or_create_by!(name: "Tier 2: Gorgeous", description: "Songs you'd recommend to others.", value: 2)
-Tier.find_or_create_by!(name: "Tier 3: Nothing New", description: "Songs you'd listen to.", value: 1)
+Tier.find_or_create_by!(name: "Tier 1: Mastermind 🥇", description: "Songs you'd play on repeat.", value: 3)
+Tier.find_or_create_by!(name: "Tier 2: Gorgeous 🥈", description: "Songs you'd recommend to others.", value: 2)
+Tier.find_or_create_by!(name: "Tier 3: Nothing New 🥉", description: "Songs you'd listen to.", value: 1)
 Tier.find_or_create_by!(name: "Tier 4: I Forgot That You Existed", description: "Songs you'd skip.", value: 0)
 
 # Create albums
-taylor_swift = Album.find_or_create_by!(title: "Taylor Swift", release_year: 2006, color: "teal")
-fearless = Album.find_or_create_by!(title: "Fearless", release_year: 2008, color: "yellow")
-speak_now = Album.find_or_create_by!(title: "Speak Now", release_year: 2010, color: "purple")
-red = Album.find_or_create_by!(title: "Red", release_year: 2012, color: "red")
-a1989 = Album.find_or_create_by!(title: "1989", release_year: 2014, color: "light blue")
-reputation = Album.find_or_create_by!(title: "Reputation", release_year: 2017, color: "black")
-lover = Album.find_or_create_by!(title: "Lover", release_year: 2019, color: "pink")
-folklore = Album.find_or_create_by!(title: "Folklore", release_year: 2020, color: "grey")
-evermore = Album.find_or_create_by!(title: "Evermore", release_year: 2020, color: "tan")
-midnights = Album.find_or_create_by!(title: "Midnights", release_year: 2022, color: "dark blue")
-ttpd = Album.find_or_create_by!(title: "The Tortured Poets Department", release_year: 2024, color: "white")
+taylor_swift = Album.find_or_create_by!(title: "Taylor Swift 💚", release_year: 2006, color: "green")
+fearless = Album.find_or_create_by!(title: "Fearless 💛", release_year: 2008, color: "yellow")
+speak_now = Album.find_or_create_by!(title: "Speak Now 💜", release_year: 2010, color: "purple")
+red = Album.find_or_create_by!(title: "Red ❤️", release_year: 2012, color: "red")
+a1989 = Album.find_or_create_by!(title: "1989 🩵", release_year: 2014, color: "light blue")
+reputation = Album.find_or_create_by!(title: "Reputation 🖤", release_year: 2017, color: "black")
+lover = Album.find_or_create_by!(title: "Lover 🩷", release_year: 2019, color: "pink")
+folklore = Album.find_or_create_by!(title: "Folklore 🩶", release_year: 2020, color: "grey")
+evermore = Album.find_or_create_by!(title: "Evermore 🤎", release_year: 2020, color: "tan")
+midnights = Album.find_or_create_by!(title: "Midnights 💙", release_year: 2022, color: "dark blue")
+ttpd = Album.find_or_create_by!(title: "The Tortured Poets Department 🤍", release_year: 2024, color: "white")
 
 # Create songs for Taylor Swift
   [

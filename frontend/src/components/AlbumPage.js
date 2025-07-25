@@ -27,46 +27,44 @@ function AlbumPage() {
 
   return (
     <div className="album-page-container" style={{ backgroundColor: paleAlbumColor }}>
-      <h1 className="album-title">{album.title}</h1>
+      <div className="topbar">
+        <h1 className="album-title">{album.title}</h1>
+      </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="columns-container">
-          <div className="tiers-column">
-            <h2>Ranked Songs</h2>
-            {tiers.map(tier => (
-              <div key={tier.id} className="tier-container">
-                <h3 className="tier-header">{tier.name}</h3>
-                <Droppable droppableId={tier.id.toString()}>
-                  {(provided) => (
-                    <div
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                      className="tier-songs-container"
-                    >
-                      <div className="ranked-songs-grid">
-                        {rankedSongsByTier[tier.id] && rankedSongsByTier[tier.id].map((song, index) => (
-                          <Draggable key={song.id} draggableId={song.id.toString()} index={index}>
-                            {(provided) => (
-                              <div
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                className="song-card"
-                              >
-                                <SongCard song={song} />
-                              </div>
-                            )}
-                          </Draggable>
-                        ))}
-                      </div>
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
-              </div>
-            ))}
-          </div>
+          {tiers.map(tier => (
+            <div key={tier.id} className="tier-column">
+              <h2 className="column-header">{tier.name}</h2>
+              <Droppable droppableId={tier.id.toString()}>
+                {(provided) => (
+                  <div
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    className="tier-songs-container"
+                  >
+                    {rankedSongsByTier[tier.id] && rankedSongsByTier[tier.id].map((song, index) => (
+                      <Draggable key={song.id} draggableId={song.id.toString()} index={index}>
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className="song-card"
+                          >
+                            <SongCard song={song} />
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </div>
+          ))}
+
           <div className="unranked-column">
-            <h2>Unranked Songs</h2>
+            <h2 className="column-header">Unranked Songs</h2>
             <Droppable droppableId="unranked">
               {(provided) => (
                 <div

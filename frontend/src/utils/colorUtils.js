@@ -1,7 +1,7 @@
 // frontend/src/utils/colorUtils.js
 
 const colorMap = {
-  "teal": "#e0f2f2",
+  "green": "#d9f7d9",
   "yellow": "#fffacd",
   "purple": "#e6e6fa",
   "red": "#ffe0e0",
