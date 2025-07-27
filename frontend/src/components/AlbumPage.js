@@ -10,9 +10,8 @@ import useDragAndDropRanking from '../hooks/useDragAndDropRanking';
 
 function AlbumPage() {
   const { albumId } = useParams();
-  const { tiers, album, songsById, rankedSongsByTier, unrankedSongs, setRankedSongsByTier, setUnrankedSongs } = useAlbumData(albumId);
+  const { tiers, album, rankedSongsByTier, unrankedSongs, setRankedSongsByTier, setUnrankedSongs } = useAlbumData(albumId);
   const onDragEnd = useDragAndDropRanking(
-    songsById,
     rankedSongsByTier,
     unrankedSongs,
     setRankedSongsByTier,

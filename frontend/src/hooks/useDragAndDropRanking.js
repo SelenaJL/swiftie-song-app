@@ -2,10 +2,10 @@
 import { useCallback } from 'react';
 import axios from 'axios';
 
-const useDragAndDropRanking = (songsById, currentRankedSongsByTier, currentUnrankedSongs, setRankedSongsByTier, setUnrankedSongs) => {
+const useDragAndDropRanking = (currentRankedSongsByTier, currentUnrankedSongs, setRankedSongsByTier, setUnrankedSongs) => {
   const metadata = {
     headers: {
-      Authorization: `PLACEHOLDER` // TODO: Replace with logged in user's JWT.
+      Authorization: localStorage.getItem('token')
     }
   };
   
@@ -15,9 +15,6 @@ const useDragAndDropRanking = (songsById, currentRankedSongsByTier, currentUnran
     if (!destination) {
       return;
     }
-
-    const draggedSong = songsById[parseInt(draggableId)];
-    if (!draggedSong) return; // Should not happen if songsById is correct
 
     // Deep copy of state to avoid direct mutation
     const newUnrankedSongs = Array.from(currentUnrankedSongs);
@@ -76,7 +73,7 @@ const useDragAndDropRanking = (songsById, currentRankedSongsByTier, currentUnran
 
     setUnrankedSongs(newUnrankedSongs);
     setRankedSongsByTier(newRankedSongsByTier);
-  }, [songsById, currentRankedSongsByTier, currentUnrankedSongs, setRankedSongsByTier, setUnrankedSongs]);
+  }, [currentRankedSongsByTier, currentUnrankedSongs, setRankedSongsByTier, setUnrankedSongs]);
 
   return onDragEnd;
 };
