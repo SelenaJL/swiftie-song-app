@@ -1,18 +1,15 @@
 // frontend/src/hooks/useAlbumData.js
 import { useState, useEffect } from 'react';
+import { getMetadata } from '../utils/apiUtils';
 import axios from 'axios';
 
+
 const useAlbumData = (albumId) => {
+  const metadata = getMetadata();
   const [tiers, setTiers] = useState([]);
   const [album, setAlbum] = useState(null);
   const [rankedSongsByTier, setRankedSongsByTier] = useState({});
   const [unrankedSongs, setUnrankedSongs] = useState([]);
-
-  const metadata = {
-    headers: {
-      Authorization: localStorage.getItem('token')
-    }
-  };
 
   useEffect(() => {
     const fetchAlbumData = async () => {

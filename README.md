@@ -89,7 +89,7 @@ npm start -p 3000
 
 8. **Album Scoring and Navigation:**
     * [x] **Backend:** Add a method or a service to calculate an album's score based on the `value` of each song's `tier` for a given user. Create endpoints for the frontend to fetch this.
-    * [ ] **Frontend:** Create a results page to display a user's album scores. Implement a menu for users to easily switch between this page and different album pages. Utilize `react-router-dom` to manage routing.
+    * [x] **Frontend:** Create a results page to display a user's album scores. Implement a menu for users to easily switch between this page and different album pages. Utilize `react-router-dom` to manage routing.
 
 ## Decision Log
 

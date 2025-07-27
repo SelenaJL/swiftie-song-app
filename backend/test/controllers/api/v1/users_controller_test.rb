@@ -30,6 +30,7 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
     album = Album.find(album_summary['album_id'])
     album_song_count = album.song_count
     album_rankings = album.rankings.where(user_id: user_id)
+    expected_score = (album_rankings.sum { |ranking| tier_values[ranking.tier_id] }.to_f / (2 * album_song_count).to_f * 100).round(2) # Assuming max tier value of 2
 
     assert_equal album.id, album_summary['album_id']
     assert_equal album.title, album_summary['album_title']
@@ -39,6 +40,6 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
     tier_values.keys.each do |tier_id|
       assert_equal album_rankings.where(tier_id: tier_id).count, album_summary['tier_breakdown'][tier_id.to_s]
     end
-    assert_equal album_rankings.sum { |ranking| tier_values[ranking.tier_id] } / album_song_count, album_summary['score']
+    assert_equal expected_score, album_summary['score']
   end
 end

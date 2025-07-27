@@ -7,37 +7,43 @@ class Api::V1::UsersController < ApplicationController
 
     album_summaries = albums.map do |album|
       song_count = album.song_count
+      unranked_count = song_count
       tier_breakdown = tier_values.keys.map { |tier_id| [tier_id, 0] }.to_h
-      base_album_summary = {
-        album_id: album.id,
-        album_title: album.title,
-        album_color: album.color,
-        song_count: song_count,
-      }
+      score = 0
       album_rankings = album.rankings.where(rankings: { user_id: current_user.id })
 
       if album_rankings.any?
         unranked_count = song_count - album_rankings.size
-        tier_breakdown = tier_values.keys.map { |tier_id| [tier_id, 0] }.to_h
         album_rankings.each do |ranking|
           tier_breakdown[ranking.tier_id] += 1
         end
-        score = album_rankings.sum { |ranking| tier_values[ranking.tier_id] } / song_count
-
-        base_album_summary.merge!({
-          unranked_count: unranked_count,
-          tier_breakdown: tier_breakdown,
-          score: score,
-        })
-      else
-        base_album_summary.merge!({
-          unranked_count: song_count,
-          tier_breakdown: tier_breakdown,
-          score: 0,
-        })
+        score = calculate_score(tier_breakdown, tier_values, song_count)
       end
+
+      {
+        album_id: album.id,
+        album_title: album.title,
+        album_color: album.color,
+        song_count: song_count,
+        unranked_count: unranked_count,
+        tier_breakdown: tier_breakdown,
+        score: score.round(2),
+      }
     end
 
     render json: album_summaries
+  end
+
+  private
+
+  def calculate_score(tier_breakdown, tier_values, song_count)
+    numerator = tier_breakdown.reduce(0) do |total_score, (tier_id, count)|
+      total_score + (count * tier_values[tier_id])
+    end
+    denominator = tier_values.values.max * song_count
+
+    return 0 if numerator.zero? || denominator.zero?
+
+    (numerator.to_f / denominator.to_f * 100)
   end
 end

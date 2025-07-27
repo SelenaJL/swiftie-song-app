@@ -16,7 +16,7 @@ function LoginPage() {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/login`, { email, password });
       localStorage.setItem('token', response.data.token);
-      // TODO: Store user data if needed
+      localStorage.setItem('name', response.data.user.name);
       console.log('Logged in successfully!', response.data);
       navigate('/');
     } catch (err) {

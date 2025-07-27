@@ -1,14 +1,11 @@
 // frontend/src/hooks/useDragAndDropRanking.js
 import { useCallback } from 'react';
+import { getMetadata } from '../utils/apiUtils';
 import axios from 'axios';
 
 const useDragAndDropRanking = (currentRankedSongsByTier, currentUnrankedSongs, setRankedSongsByTier, setUnrankedSongs) => {
-  const metadata = {
-    headers: {
-      Authorization: localStorage.getItem('token')
-    }
-  };
-  
+  const metadata = getMetadata();
+
   const onDragEnd = useCallback(async (result) => {
     const { source, destination, draggableId } = result;
 

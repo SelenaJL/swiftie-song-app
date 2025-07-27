@@ -1,0 +1,63 @@
+/* frontend/src/HomePage.css */
+
+.home-page-container {
+  padding: 20px;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.home-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.home-loading,
+.home-error,
+.no-rankings-message {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.2em;
+  color: #555;
+}
+
+.home-error {
+  color: red;
+}
+
+.album-summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.album-summary-table th,
+.album-summary-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.album-summary-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  color: #333;
+}
+
+.album-summary-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.album-summary-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.album-summary-table a {
+  text-decoration: none;
+  color: #6a0dad; /* Purple */
+  font-weight: bold;
+}
+
+.album-summary-table a:hover {
+  text-decoration: underline;
+}
