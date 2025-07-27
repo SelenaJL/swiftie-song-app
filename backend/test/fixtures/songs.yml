@@ -1,15 +1,22 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: "Song 1"
+album_one_a:
+  title: "Song A"
   album: one
   spotify_track_id: "12345"
   from_the_vault: false
   feature: nil
 
-two:
-  title: "Song 2"
-  album: two
+album_one_b:
+  title: "Song B"
+  album: one
   spotify_track_id: "67890"
+  from_the_vault: false
+  feature: nil
+
+album_two_c:
+  title: "Song C"
+  album: two
+  spotify_track_id: "12345"
   from_the_vault: false
   feature: nil

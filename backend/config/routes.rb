@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :rankings, only: [:create, :update, :destroy]
       post '/register', to: 'authentication#register'
       post '/login', to: 'authentication#login'
+      get '/me/album_summaries', to: 'users#album_summaries'
     end
   end
 

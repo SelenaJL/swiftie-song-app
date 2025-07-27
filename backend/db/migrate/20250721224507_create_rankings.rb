@@ -4,6 +4,7 @@ class CreateRankings < ActiveRecord::Migration[8.0]
       t.references :song, null: false, foreign_key: true
       t.references :tier, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
+      t.references :album, null: false, foreign_key: true
 
       t.timestamps
     end

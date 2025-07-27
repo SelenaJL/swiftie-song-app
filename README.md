@@ -81,14 +81,14 @@ npm start -p 3000
 
 6.  **User Authentication:**
     * [x] **Backend:** Implement token-based authentication using `has_secure_password` for password management and the `jwt` gem for token generation and validation.
-    * [ ] **Frontend:** Create Login and Signup pages. When a user logs in, store the received JWT (JSON Web Token) and include it in the header of all subsequent API requests.
+    * [x] **Frontend:** Create Login and Signup pages. When a user logs in, store the received JWT (JSON Web Token) and include it in the header of all subsequent API requests.
 
 7.  **Spotify Integration:**
     * [ ] **Backend:** Add the `rspotify` gem to handle OAuth authentication with Spotify. Create endpoints for the frontend to initiate the Spotify login flow.
     * [ ] **Frontend:** Add a "Connect to Spotify" button. Once authorized, use the Spotify Web Playback SDK to allow playback of 30-second song previews directly in the app. This will require storing the Spotify Track ID for each song in the database.
 
 8. **Album Scoring and Navigation:**
-    * [ ] **Backend:** Add a method or a service to calculate an album's score based on the `value` of each song's `tier` for a given user. Create endpoints for the frontend to fetch this.
+    * [x] **Backend:** Add a method or a service to calculate an album's score based on the `value` of each song's `tier` for a given user. Create endpoints for the frontend to fetch this.
     * [ ] **Frontend:** Create a results page to display a user's album scores. Implement a menu for users to easily switch between this page and different album pages. Utilize `react-router-dom` to manage routing.
 
 ## Decision Log
@@ -102,6 +102,10 @@ npm start -p 3000
 **API**: I chose a RESTful API for its simplicity, widespread adoption, and stateless nature which promotes scalability and clear separation between frontend / backend. Alternatives like GraphQL (more complex), SOAP (overly verbose), and RPC (less standardized) weren't suitable for this project's requirements.
 
 **Frontend**: I chose React which is a popular JavaScript library known for its component-based architecture, declarative views, and efficient rendering. This provides a strong foundation for building interactive and dynamic single-page applications.
+
+### Database Denormalization: `album_id` on `Ranking` model
+
+I decided to add an `album_id` column to the `Ranking` model even though this information could be derived through the `song_id` as each song belongs to an album. As a benefit, this allows for more efficient querying of user rankings per album and avoids costly `JOIN` operations with the `songs` table. As a trade off, this introduces a small amount of data redundancy but the risk of inconsistency is minimal given the stable relationship between songs and albums.
 
 ### User Authentication
 

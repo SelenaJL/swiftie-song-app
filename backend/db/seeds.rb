@@ -2,9 +2,6 @@
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 
-# TODO: Remove temporary user after testing.
-User.find_or_create_by!(name: "Test User", email: "test@example.com", password_digest: "password")
-
 # Create tiers
 Tier.find_or_create_by!(name: "Tier 1: Mastermind 🥇", description: "Songs you'd play on repeat.", value: 3)
 Tier.find_or_create_by!(name: "Tier 2: Gorgeous 🥈", description: "Songs you'd recommend to others.", value: 2)

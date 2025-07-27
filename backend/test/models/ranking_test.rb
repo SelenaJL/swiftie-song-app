@@ -3,14 +3,15 @@ require "test_helper"
 class RankingTest < ActiveSupport::TestCase
   setup do
     @user = users(:one)
-    @song = songs(:one)
+    @song = songs(:album_one_a)
     @tier = tiers(:one)
   end
 
-  test "should be valid" do
+  test "should be valid and set album id based on song" do
     new_user = User.new(name: "Test User", email: "test@example.com", password: "password", password_confirmation: "password")
     ranking = Ranking.new(user: new_user, song: @song, tier: @tier)
     assert ranking.valid?
+    assert_equal @song.album_id, ranking.album_id
   end
 
   test "should require a user" do

@@ -23,8 +23,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_21_231159) do
     t.integer "song_id", null: false
     t.integer "tier_id", null: false
     t.integer "user_id", null: false
+    t.integer "album_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_rankings_on_album_id"
     t.index ["song_id"], name: "index_rankings_on_song_id"
     t.index ["tier_id"], name: "index_rankings_on_tier_id"
     t.index ["user_id"], name: "index_rankings_on_user_id"
@@ -58,6 +60,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_21_231159) do
     t.string "password_digest"
   end
 
+  add_foreign_key "rankings", "albums"
   add_foreign_key "rankings", "songs"
   add_foreign_key "rankings", "tiers"
   add_foreign_key "rankings", "users"

@@ -2,7 +2,7 @@ class Api::V1::RankingsController < ApplicationController
   before_action :authenticate_request!
 
   def index
-    @rankings = current_user.rankings.joins(:song).where(songs: { album_id: params[:album_id] })
+    @rankings = current_user.rankings.where(album_id: params[:album_id])
     render json: @rankings
   end
 

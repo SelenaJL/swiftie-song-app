@@ -1,11 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-user_one_song_one:
+user_one_album_one_a:
   user: one
-  song: one
+  song: album_one_a
+  album: one
   tier: one
 
-user_two_song_two:
-  user: two
-  song: two
+user_one_album_one_b:
+  user: one
+  song: album_one_b
+  album: one
   tier: two
+
+user_two_album_one_a:
+  user: two
+  song: album_one_a
+  album: one
+  tier: one
