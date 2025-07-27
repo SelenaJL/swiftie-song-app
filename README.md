@@ -2,13 +2,50 @@
 
 This app allows users to rank Taylor Swift songs from each of her albums to discover their favorite era!
 
+## Quickstart
+
+For local development, ensure you've installed:
+*   **Ruby:** Version 3.x (check `.ruby-version` in the `backend` directory for the exact version)
+*   **Rails:** Version 7.x or 8.x
+*   **Node.js:** Version 18.x or higher
+*   **npm:** Version 8.x or higher
+
+Then, open a terminal to run the Rails server:
+
+```bash
+# Navigate to the backend directory
+cd swiftie-song-app/backend
+
+# Install Ruby dependancies
+bundle install
+
+# Create and seed the SQLite database
+rails db:create && rails db:migrate && rails db:seed
+
+# Run on http://localhost:3001
+rails server -p 3001
+```
+
+Finally, open a new terminal to run the React app:
+
+```bash
+# Navigate to the frontend directory
+cd swiftie-song-app/frontend
+
+# Install Node.js dependancies
+npm install
+
+# Run on http://localhost:3000 and open in web browser
+npm start -p 3000
+```
+
 ## Development Plan
 
 ### **Phase 1: Backend App (Rails API)**
 
 1.  **Project Setup:**
     * [x] Initialize a new Rails 7 application in API-only mode.
-    * [ ] Configure `CORS` (Cross-Origin Resource Sharing) to allow the React frontend to communicate with the API.
+    * [x] Configure `CORS` (Cross-Origin Resource Sharing) to allow the React frontend to communicate with the API.
 
 2.  **Database Modeling:**
     * [x] Create the necessary models and database migrations:
