@@ -1,15 +1,20 @@
 // frontend/src/tests/HomePage.test.js
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { BrowserRouter as Router, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import HomePage from '../components/HomePage';
 
 jest.mock('axios');
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: jest.fn(),
+}));
 
 const localStorageMock = {
   setItem: jest.fn(),
   getItem: jest.fn(),
+  removeItem: jest.fn(),
   clear: jest.fn(),
 };
 Object.defineProperty(window, 'localStorage', {
@@ -124,5 +129,31 @@ describe('HomePage', () => {
     await waitFor(() => {
       expect(screen.getByText(/Please log in to view album summaries./i)).toBeInTheDocument();
     });
+  });
+
+  test('logs out user when logout button is clicked', async () => {
+    localStorageMock.getItem.mockReturnValue('mock_token');
+    localStorageMock.getItem.mockReturnValueOnce('Test User');
+    axios.get.mockResolvedValueOnce({ data: [] });
+
+    const navigateMock = jest.fn();
+    require('react-router-dom').useNavigate.mockReturnValue(navigateMock);
+
+    render(
+      <Router>
+        <HomePage />
+      </Router>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText(/No rankings yet. Start ranking songs on an album page!/i)).toBeInTheDocument();
+    });
+
+    const logoutButton = screen.getByRole('button', { name: /Logout/i });
+    fireEvent.click(logoutButton);
+
+    expect(localStorageMock.removeItem).toHaveBeenCalledWith('token');
+    expect(localStorageMock.removeItem).toHaveBeenCalledWith('name');
+    expect(navigateMock).toHaveBeenCalledWith('/login');
   });
 });

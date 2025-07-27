@@ -13,12 +13,23 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   display: flex;
   align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.back-button {
+  font-size: 24px;
+  text-decoration: none;
+  color: #333;
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .album-title {
-  text-align: left;
+  text-align: center;
   margin: 0;
-  padding-left: 10px;
 }
 
 .columns-container {

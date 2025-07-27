@@ -28,6 +28,7 @@ function SignupPage() {
       // Automatically log the user in after registration
       const loginResponse = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/login`, { email, password });
       localStorage.setItem('token', loginResponse.data.token);
+      localStorage.setItem('name', response.data.user.name);
       navigate('/');
     } catch (err) {
       console.error('Registration error:', err.response || err);
@@ -37,6 +38,7 @@ function SignupPage() {
 
   return (
     <div className="auth-container">
+      <h1 className="auth-title">Swiftie Song Analysis</h1>
       <div className="auth-form-card">
         <h2>Sign Up</h2>
         <form onSubmit={handleSubmit}>

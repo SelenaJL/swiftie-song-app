@@ -1,7 +1,7 @@
 // src/components/AlbumPage.js
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import SongCard from './SongCard';
 import { getPaleColor } from '../utils/colorUtils';
 import '../AlbumPage.css';
@@ -27,6 +27,7 @@ function AlbumPage() {
   return (
     <div className="album-page-container" style={{ backgroundColor: paleAlbumColor }}>
       <div className="topbar">
+        <Link to="/" className="back-button">X</Link>
         <h1 className="album-title">{album.title}</h1>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>

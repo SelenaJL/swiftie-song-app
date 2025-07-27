@@ -1,13 +1,41 @@
 /* frontend/src/HomePage.css */
 
 .home-page-container {
-  padding: 20px;
+  padding: 0;
   font-family: 'Quicksand', sans-serif;
 }
 
+.topbar {
+  background-color: #f8f8f8; /* Light grey background */
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.logout-button {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #6a0dad; /* Purple */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.logout-button:hover {
+  background-color: #5e0bad;
+}
+
 .home-title {
-  text-align: center;
-  margin-bottom: 30px;
+  margin: 0;
   color: #333;
 }
 

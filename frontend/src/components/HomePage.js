@@ -1,7 +1,7 @@
 // frontend/src/components/HomePage.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getMetadata } from '../utils/apiUtils';
 import { getPaleColor } from '../utils/colorUtils';
 import '../HomePage.css';
@@ -9,8 +9,8 @@ import '../HomePage.css';
 function HomePage() {
   const metadata = getMetadata();
   const [albumSummaries, setAlbumSummaries] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAlbumSummaries = async () => {
@@ -18,7 +18,6 @@ function HomePage() {
         const token = localStorage.getItem('token');
         if (!token) {
           setError('Please log in to view album summaries.');
-          setLoading(false);
           return;
         }
 
@@ -28,27 +27,34 @@ function HomePage() {
         console.error('Error fetching album summaries:', err.response || err);
         setError('Failed to fetch album summaries. Please try again later.');
       } finally {
-        setLoading(false);
       }
     };
 
     fetchAlbumSummaries();
   }, []);
 
-  if (loading) {
-    return <div className="home-loading">Loading album data...</div>;
-  }
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('name');
+    navigate('/login');
+  };
 
   if (error) {
     return <div className="home-error">{error}</div>;
+  } else if (albumSummaries.length === 0) {
+    return <div className="home-loading">Loading album data...</div>;
   }
 
   const name = localStorage.getItem('name');
   const possessive_name = name.endsWith('s') ? `${name}'` : `${name}'s`;
 
-  return (
+return (
     <div className="home-page-container">
-      <h1 className="home-title">{possessive_name} Swiftie Analysis</h1>
+      <div className="topbar">
+        <button onClick={handleLogout} className="logout-button">Logout</button>
+        <h1 className="home-title">{possessive_name} Swiftie Analysis</h1>
+      </div>
+      <p className="no-rankings-message">Click on an album name to rank its songs. Results appear below!</p>
       <table className="album-summary-table">
         <thead>
           <tr>

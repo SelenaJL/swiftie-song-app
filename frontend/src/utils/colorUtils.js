@@ -9,9 +9,9 @@ const colorMap = {
   "black": "#e0e0e0", // Pale black is light grey
   "pink": "#ffe0f0",
   "grey": "#f0f0f0",
-  "tan": "#f5f5dc",
+  "tan": "#fff1d9ff",
   "dark blue": "#e0e0ff",
-  "white": "#ffffff",
+  "white": "#fffcf3ff",
 };
 
 export const getPaleColor = (colorName) => {
