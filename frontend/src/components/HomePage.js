@@ -7,9 +7,11 @@ import useHomePageData from '../hooks/useHomePageData';
 
 function HomePage() {
   const navigate = useNavigate();
-  const { albumSummaries, minTierId, maxTierId, awards, error } = useHomePageData();
+  const { albumSummaries, awards, error } = useHomePageData();
+  console.log('Awards:', awards);
   const name = localStorage.getItem('name');
   const possessive_name = name.endsWith('s') ? `${name}'` : `${name}'s`;
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('name');
@@ -32,22 +34,18 @@ function HomePage() {
         <div className="info-container">
           <div className="info-section">
             <h2>Instructions 👀</h2>
-            <p>Click on an album name to rank its songs. There are an even number of tiers to prevent neutrality. Vault tracks are included but rerecordeds are not counted separately. The final score is calculated based on the percentge of songs in each tier. Happy ranking!</p>
+            <p>Click on an album name to rank its songs. There are an even number of tiers to prevent neutrality. Vault tracks are included but rerecordeds are not counted separately. The score and weighted score are calculated based on the number and percentage of songs in each tier, respectively. Happy ranking!</p>
           </div>
           <div className="info-section">
             <h2>Awards 🏆</h2>
             {awards.length == 0 && (
               <p>Once you rank songs, your highest scoring album and honorary mentions will appear here!</p>
             )}
-            {awards.highestScoreAlbum && (
-              <p><strong>Highest Score:</strong> {awards.highestScoreAlbum.album_title} ({awards.highestScoreAlbum.score}%)</p>
-            )}
-            {awards.mostMinTierAlbum && (
-              <p><strong>Most Tier {minTierId} Songs:</strong> {awards.mostMinTierAlbum.album_title} ({awards.mostMinTierAlbum.tier_breakdown[minTierId].percentage}%)</p>
-            )}
-            {awards.leastMaxTierAlbum && (
-              <p><strong>Least Tier {maxTierId} Songs:</strong> {awards.leastMaxTierAlbum.album_title} ({awards.leastMaxTierAlbum.tier_breakdown[maxTierId].percentage}%)</p>
-            )}
+            <div className={awards.length > 3 ? 'awards-grid' : ''}>
+              {awards.map(award => (
+                <p><strong>{award.title}:</strong> {award.album} ({award.metric})</p>
+              ))}
+            </div>
           </div>
         </div>
         <table className="album-summary-table">
@@ -60,6 +58,7 @@ function HomePage() {
               ))}
               <th>Unranked Songs</th>
               <th>Score</th>
+              <th>Weighted Score</th>
             </tr>
           </thead>
           <tbody>
@@ -76,6 +75,7 @@ function HomePage() {
                 ))}
                 <td>{summary.unranked_count}</td>
                 <td>{summary.score}%</td>
+                <td>{summary.weighted_score}%</td>
               </tr>
             ))}
           </tbody>

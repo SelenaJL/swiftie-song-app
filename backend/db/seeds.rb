@@ -19,7 +19,7 @@ lover = Album.find_or_create_by!(title: "Lover 🩷", release_year: 2019, color:
 folklore = Album.find_or_create_by!(title: "Folklore 🩶", release_year: 2020, color: "grey")
 evermore = Album.find_or_create_by!(title: "Evermore 🤎", release_year: 2020, color: "tan")
 midnights = Album.find_or_create_by!(title: "Midnights 💙", release_year: 2022, color: "dark blue")
-ttpd = Album.find_or_create_by!(title: "The Tortured Poets Department 🤍", release_year: 2024, color: "white")
+ttpd = Album.find_or_create_by!(title: "TTPD 🤍", release_year: 2024, color: "white")
 
 # Create songs for Taylor Swift
   [

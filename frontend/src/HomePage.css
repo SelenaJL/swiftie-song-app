@@ -89,6 +89,17 @@
   margin-bottom: 0;
 }
 
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.awards-grid p {
+  margin: 0;
+}
+
 .album-summary-table {
   width: 100%;
   border-collapse: collapse;
