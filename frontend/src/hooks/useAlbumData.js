@@ -10,10 +10,17 @@ const useAlbumData = (albumId) => {
   const [album, setAlbum] = useState(null);
   const [rankedSongsByTier, setRankedSongsByTier] = useState({});
   const [unrankedSongs, setUnrankedSongs] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchAlbumData = async () => {
       try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          setError('Please log in to rank songs from this album.');
+          return;
+        }
+
         const tiersResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/tiers`);
         const albumResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/albums/${albumId}`);
         const songsResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/albums/${albumId}/songs`);
@@ -42,8 +49,9 @@ const useAlbumData = (albumId) => {
         setAlbum(albumResponse.data);
         setRankedSongsByTier(initialRankedSongs);
         setUnrankedSongs(initialUnrankedSongs);
-      } catch (error) {
-        console.error('Error fetching album data:', error);
+      } catch (err) {
+        console.error('Error fetching album data:', err);
+        setError('Failed to fetch data. Please try again later.');
       }
     };
 
@@ -52,7 +60,7 @@ const useAlbumData = (albumId) => {
     }
   }, [albumId]);
 
-  return { tiers, album, rankedSongsByTier, unrankedSongs, setRankedSongsByTier, setUnrankedSongs };
+  return { tiers, album, rankedSongsByTier, unrankedSongs, setRankedSongsByTier, setUnrankedSongs, error };
 };
 
 export default useAlbumData;

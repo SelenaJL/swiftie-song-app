@@ -1,38 +1,15 @@
 // frontend/src/components/HomePage.js
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getMetadata } from '../utils/apiUtils';
 import { getPaleColor } from '../utils/colorUtils';
 import '../HomePage.css';
+import useHomePageData from '../hooks/useHomePageData';
 
 function HomePage() {
-  const metadata = getMetadata();
-  const [albumSummaries, setAlbumSummaries] = useState([]);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchAlbumSummaries = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          setError('Please log in to view album summaries.');
-          return;
-        }
-
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/me/album_summaries`, metadata);
-        setAlbumSummaries(response.data);
-      } catch (err) {
-        console.error('Error fetching album summaries:', err.response || err);
-        setError('Failed to fetch album summaries. Please try again later.');
-      } finally {
-      }
-    };
-
-    fetchAlbumSummaries();
-  }, []);
-
+  const { albumSummaries, minTierId, maxTierId, awards, error } = useHomePageData();
+  const name = localStorage.getItem('name');
+  const possessive_name = name.endsWith('s') ? `${name}'` : `${name}'s`;
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('name');
@@ -42,49 +19,68 @@ function HomePage() {
   if (error) {
     return <div className="home-error">{error}</div>;
   } else if (albumSummaries.length === 0) {
-    return <div className="home-loading">Loading album data...</div>;
+    return <div className="home-loading">Loading user data...</div>;
   }
 
-  const name = localStorage.getItem('name');
-  const possessive_name = name.endsWith('s') ? `${name}'` : `${name}'s`;
-
-return (
-    <div className="home-page-container">
+  return (
+    <div className="background-container">
       <div className="topbar">
         <button onClick={handleLogout} className="logout-button">Logout</button>
         <h1 className="home-title">{possessive_name} Swiftie Analysis</h1>
-      </div>
-      <p className="no-rankings-message">Click on an album name to rank its songs. Results appear below!</p>
-      <table className="album-summary-table">
-        <thead>
-          <tr>
-            <th>Album</th>
-            <th>Total Songs</th>
-            {albumSummaries[0] && Object.keys(albumSummaries[0].tier_breakdown).map(tierId => (
-              <th key={tierId}>Songs in Tier {tierId}</th>
-            ))}
-            <th>Unranked Songs</th>
-            <th>Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          {albumSummaries.map(summary => (
-            <tr key={summary.album_id} style={{ backgroundColor: getPaleColor(summary.album_color) }}>
-              <td>
-                <Link to={`/albums/${summary.album_id}`}>
-                  {summary.album_title}
-                </Link>
-              </td>
-              <td>{summary.unranked_count + Object.values(summary.tier_breakdown).reduce((acc, count) => acc + count, 0)}</td>
-              {Object.values(summary.tier_breakdown).map((count, index) => (
-                <td key={index}>{count}</td>
+      </div> 
+      <div className="home-page-container">     
+        <div className="info-container">
+          <div className="info-section">
+            <h2>Instructions 👀</h2>
+            <p>Click on an album name to rank its songs. There are an even number of tiers to prevent neutrality. Vault tracks are included but rerecordeds are not counted separately. The final score is calculated based on the percentge of songs in each tier. Happy ranking!</p>
+          </div>
+          <div className="info-section">
+            <h2>Awards 🏆</h2>
+            {awards.length == 0 && (
+              <p>Once you rank songs, your highest scoring album and honorary mentions will appear here!</p>
+            )}
+            {awards.highestScoreAlbum && (
+              <p><strong>Highest Score:</strong> {awards.highestScoreAlbum.album_title} ({awards.highestScoreAlbum.score}%)</p>
+            )}
+            {awards.mostMinTierAlbum && (
+              <p><strong>Most Tier {minTierId} Songs:</strong> {awards.mostMinTierAlbum.album_title} ({awards.mostMinTierAlbum.tier_breakdown[minTierId].percentage}%)</p>
+            )}
+            {awards.leastMaxTierAlbum && (
+              <p><strong>Least Tier {maxTierId} Songs:</strong> {awards.leastMaxTierAlbum.album_title} ({awards.leastMaxTierAlbum.tier_breakdown[maxTierId].percentage}%)</p>
+            )}
+          </div>
+        </div>
+        <table className="album-summary-table">
+          <thead>
+            <tr>
+              <th>Album</th>
+              <th>Total Songs</th>
+              {albumSummaries[0] && Object.keys(albumSummaries[0].tier_breakdown).map(tierId => (
+                <th key={tierId}>Songs in Tier {tierId}</th>
               ))}
-              <td>{summary.unranked_count}</td>
-              <td>{summary.score}%</td>
+              <th>Unranked Songs</th>
+              <th>Score</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {albumSummaries.map(summary => (
+              <tr key={summary.album_id} style={{ backgroundColor: getPaleColor(summary.album_color) }}>
+                <td>
+                  <Link to={`/albums/${summary.album_id}`}>
+                    {summary.album_title}
+                  </Link>
+                </td>
+                <td>{summary.unranked_count + Object.values(summary.tier_breakdown).reduce((acc, {count}) => acc + count, 0)}</td>
+                {Object.values(summary.tier_breakdown).map(({count}, index) => (
+                  <td key={index}>{count}</td>
+                ))}
+                <td>{summary.unranked_count}</td>
+                <td>{summary.score}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

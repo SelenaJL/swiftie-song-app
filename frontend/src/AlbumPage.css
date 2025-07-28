@@ -1,13 +1,29 @@
 /* frontend/src/AlbumPage.css */
 
 .album-page-container {
+  padding: 0 10px 10px 10px;
+}
+
+.background-container {
   min-height: 100vh;
   padding: 0;
   box-sizing: border-box;
 }
 
+.album-loading,
+.album-error {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.2em;
+  color: #555;
+}
+
+.album-error {
+  color: red;
+}
+
 .topbar {
-  background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
+  background-color: white;
   padding: 10px 20px;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);

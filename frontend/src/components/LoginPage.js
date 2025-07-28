@@ -27,7 +27,7 @@ function LoginPage() {
 
   return (
     <div className="auth-container">
-      <h1 className="auth-title">Swiftie Song Analysis</h1>
+      <h1 className="auth-title">My Swiftie Analysis</h1>
       <div className="auth-form-card">
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>

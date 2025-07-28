@@ -8,15 +8,13 @@ class Api::V1::UsersController < ApplicationController
     album_summaries = albums.map do |album|
       song_count = album.song_count
       unranked_count = song_count
-      tier_breakdown = tier_values.keys.map { |tier_id| [tier_id, 0] }.to_h
+      tier_breakdown = tier_values.keys.map { |tier_id| [tier_id, {count: 0, percentage: 0}] }.to_h
       score = 0
       album_rankings = album.rankings.where(rankings: { user_id: current_user.id })
 
       if album_rankings.any?
         unranked_count = song_count - album_rankings.size
-        album_rankings.each do |ranking|
-          tier_breakdown[ranking.tier_id] += 1
-        end
+        tier_breakdown = calculate_tier_breakdown(album_rankings, tier_breakdown, song_count)
         score = calculate_score(tier_breakdown, tier_values, song_count)
       end
 
@@ -27,7 +25,7 @@ class Api::V1::UsersController < ApplicationController
         song_count: song_count,
         unranked_count: unranked_count,
         tier_breakdown: tier_breakdown,
-        score: score.round(2),
+        score: score,
       }
     end
 
@@ -36,14 +34,21 @@ class Api::V1::UsersController < ApplicationController
 
   private
 
+  def calculate_tier_breakdown(album_rankings, tier_breakdown, song_count)
+    album_rankings.each do |ranking|
+      tier_breakdown[ranking.tier_id][:count] += 1
+      tier_breakdown[ranking.tier_id][:percentage] = (tier_breakdown[ranking.tier_id][:count].to_f / song_count * 100).round(2)
+    end
+
+    tier_breakdown
+  end
+
   def calculate_score(tier_breakdown, tier_values, song_count)
-    numerator = tier_breakdown.reduce(0) do |total_score, (tier_id, count)|
-      total_score + (count * tier_values[tier_id])
+    numerator = tier_breakdown.reduce(0) do |total_score, (tier_id, breakdown)|
+      total_score + (breakdown[:count] * tier_values[tier_id])
     end
     denominator = tier_values.values.max * song_count
 
-    return 0 if numerator.zero? || denominator.zero?
-
-    (numerator.to_f / denominator.to_f * 100)
+    (numerator.to_f / denominator * 100).round(2)
   end
 end
