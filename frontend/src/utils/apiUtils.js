@@ -1,9 +1,10 @@
 // frontend/src/utils/apiUtils.js
 
 export const getMetadata = () => {
+    const token = localStorage.getItem('token');
     return {
         headers: {
-            Authorization: localStorage.getItem('token')
+            Authorization: token ? `Bearer ${token}` : ''
         }
     };
 }   
