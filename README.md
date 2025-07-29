@@ -1,6 +1,9 @@
 # Swiftie Song Analysis App
 
-This app allows users to create an account and rank Taylor Swift songs from each of her albums to discover their favorite era!
+This app allows users to rank Taylor Swift songs from each of her albums to discover their favorite era! It features account creation as well as a drag and drop interface.
+
+![alt text](./HomePageScreenshot.png)
+![alt text](./AlbumPageScreenshot.png)
 
 ## Quickstart
 
