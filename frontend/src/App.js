@@ -4,6 +4,7 @@ import AlbumPage from './components/AlbumPage';
 import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
 import HomePage from './components/HomePage';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
@@ -12,8 +13,10 @@ function App() {
         <Routes>
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/albums/:albumId" element={<AlbumPage />} />
-          <Route path="/" element={<HomePage />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/albums/:albumId" element={<AlbumPage />} />
+            <Route path="/" element={<HomePage />} />
+          </Route>
         </Routes>
       </div>
     </Router>

@@ -8,15 +8,10 @@ const useHomePageData = () => {
   const [awards, setAwards] = useState({});
   const [error, setError] = useState(null);
 
+
   useEffect(() => {
     const fetchAlbumSummaries = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          setError('Please log in to view your Swiftie analysis.');
-          return;
-        }
-
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/me/album_summaries`, metadata);
         setAlbumSummaries(response.data);
         calculateAwards(response.data);

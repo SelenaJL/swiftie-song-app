@@ -8,7 +8,6 @@ import useHomePageData from '../hooks/useHomePageData';
 function HomePage() {
   const navigate = useNavigate();
   const { albumSummaries, awards, error } = useHomePageData();
-  console.log('Awards:', awards);
   const name = localStorage.getItem('name');
   const possessive_name = name.endsWith('s') ? `${name}'` : `${name}'s`;
 
@@ -34,7 +33,7 @@ function HomePage() {
         <div className="info-container">
           <div className="info-section">
             <h2>Instructions 👀</h2>
-            <p>Click on an album name to rank its songs. There are an even number of tiers to prevent neutrality. Vault tracks are included but rerecordeds are not counted separately. The score and weighted score are calculated based on the number and percentage of songs in each tier, respectively. Happy ranking!</p>
+            <p>Click on an album name to rank its songs. There are an even number of tiers to prevent neutrality. The score and weighted score are calculated based on the number and percentage of songs in each tier, respectively. Bonus and vault tracks are included. Rerecordeds are not counted separately from originals. Happy ranking!</p>
           </div>
           <div className="info-section">
             <h2>Awards 🏆</h2>
@@ -43,7 +42,7 @@ function HomePage() {
             )}
             <div className={awards.length > 3 ? 'awards-grid' : ''}>
               {awards.map(award => (
-                <p><strong>{award.title}:</strong> {award.album} ({award.metric})</p>
+                <p key={award.title}><strong>{award.title}:</strong> {award.album} ({award.metric})</p>
               ))}
             </div>
           </div>

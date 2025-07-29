@@ -17,7 +17,7 @@ function AlbumPage() {
     setRankedSongsByTier,
     setUnrankedSongs,
   );
-  
+
   if (error) {
     return <div className="album-error">{error}</div>;
   } else if (!album) {
