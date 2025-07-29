@@ -25,102 +25,48 @@ const useHomePageData = () => {
   }, []);
 
   const calculateAwards = (albumSummariesData) => {
-    let highestScoreAlbum = null;
-    let highestWeightedScoreAlbum = null;
-    let highestMinTierCountAlbum = null;
-    let highestMinTierPercentAlbum = null;
-    let lowestMaxTierCountAlbum = null;
-    let lowestMaxTierPercentAlbum = null;
-    let highestScore = -1;
-    let highestWeightedScore = -1;
-    let highestMinTierCount = -1;
-    let highestMinTierPercent = -1;
-    let lowestMaxTierCount = 101;
-    let lowestMaxTierPercent = 101;
-
+    // Assume tier ID corresponds to hierarchy.
     const tiers = Object.keys(albumSummariesData[0].tier_breakdown);
     const minTierId = Math.min(...tiers);
     const maxTierId = Math.max(...tiers);
 
-    albumSummariesData.forEach(album => {
-      const score = album.score;
-      const weightedScore = album.weighted_score;
-      const minTierCount = album.tier_breakdown[minTierId].count;
-      const maxTierCount = album.tier_breakdown[maxTierId].count;
-      const minTierPercent = album.tier_breakdown[minTierId].percent;
-      const maxTierPercent = album.tier_breakdown[maxTierId].percent;
+    let awards = [
+      {title: "Highest Score", current: null, record: null, winners: [], max: true, percent: true},
+      {title: "Highest Weighted Score", current: null, record: null, winners: [], max: true, percent: true},
+      {title: "Most Tier " + minTierId + " Songs", current: null, record: null, winners: [], max: true, percent: false},
+      {title: "Highest % of Tier " + minTierId + " Songs", current: null, record: null, winners: [], max: true, percent: true},
+      {title: "Least Tier " + maxTierId + " Songs", current: null, record: null, winners: [], max: false, percent: false},
+      {title: "Lowest % of Tier " + maxTierId + " Songs", current: null, record: null, winners: [], max: false, percent: true},
+    ];
 
-      if (score > highestScore) {
-        highestScore = score;
-        highestScoreAlbum = album;
-      }
-      if (weightedScore > highestWeightedScore) {
-        highestWeightedScore = weightedScore;
-        highestWeightedScoreAlbum = album;
-      }
-      if (minTierCount > highestMinTierCount) {
-        highestMinTierCount = minTierCount;
-        highestMinTierCountAlbum = album;
-      }
-      if (maxTierCount < lowestMaxTierCount) {
-        lowestMaxTierCount = maxTierCount;
-        lowestMaxTierCountAlbum = album;
-      }
-      if (minTierPercent > highestMinTierPercent) {
-        highestMinTierPercent = minTierPercent;
-        highestMinTierPercentAlbum = album;
-      }
-      if (maxTierPercent < lowestMaxTierPercent) {
-        lowestMaxTierPercent = maxTierPercent;
-        lowestMaxTierPercentAlbum = album;
-      }
+    albumSummariesData.forEach(album => {
+      awards[0].current = album.score;
+      awards[1].current = album.weighted_score;
+      awards[2].current = album.tier_breakdown[minTierId].count;
+      awards[3].current = album.tier_breakdown[minTierId].percent;
+      awards[4].current = album.tier_breakdown[maxTierId].count;
+      awards[5].current = album.tier_breakdown[maxTierId].percent;
+
+      awards.forEach(award => {
+        if (award.record == null || (award.max && award.current > award.record) || (!award.max && award.current < award.record)) {
+          award.record = award.current;
+          award.winners = [album.album_title];
+        } else if (award.current === award.record) {
+          award.winners.push(album.album_title);
+        }
+      });
     });
 
-    let awards = [];
-
-    if (highestScoreAlbum) {
-      awards.push({
-        title: 'Highest Score',
-        album: highestScoreAlbum.album_title,
-        metric: `${highestScore}%`,
-      });
-    }
-    if (highestWeightedScoreAlbum) {
-      awards.push({
-        title: 'Highest Weighted Score',
-        album: highestWeightedScoreAlbum.album_title,
-        metric: `${highestWeightedScore}%`,
-      });
-    }
-    if (highestMinTierCountAlbum) {
-      awards.push({
-        title: 'Most Tier ' + minTierId + ' Songs',
-        album: highestMinTierCountAlbum.album_title,
-        metric: highestMinTierCount,
-      });
-    }
-    if (highestMinTierPercentAlbum) {
-      awards.push({
-        title: 'Highest % of Tier ' + minTierId + ' Songs',
-        album: highestMinTierPercentAlbum.album_title,
-        metric: `${highestMinTierPercent}%`,
-      });
-    }
-    if (lowestMaxTierCountAlbum) {
-      awards.push({
-        title: 'Least Tier ' + maxTierId + ' Songs',
-        album: lowestMaxTierCountAlbum.album_title,
-        metric: lowestMaxTierCount,
-      });
-    }
-    if (lowestMaxTierPercentAlbum) {
-      awards.push({
-        title: 'Lowest % of Tier ' + maxTierId + ' Songs',
-        album: lowestMaxTierPercentAlbum.album_title,
-        metric: `${lowestMaxTierPercent}%`,
-      });
-    }
-
+    awards = awards.map(award => {
+      if (award.winners.length > 0) {
+        return {
+          title: award.title,
+          albums: award.winners.join(' '),
+          metric: award.percent ? `${award.record}%` : award.record,
+        };
+      }
+      return null;
+    }).filter(award => award !== null);
     setAwards(awards);
   };
 

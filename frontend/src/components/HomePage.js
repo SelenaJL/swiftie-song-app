@@ -42,7 +42,7 @@ function HomePage() {
             )}
             <div className={awards.length > 3 ? 'awards-grid' : ''}>
               {awards.map(award => (
-                <p key={award.title}><strong>{award.title}:</strong> {award.album} ({award.metric})</p>
+                <p key={award.title}><strong>{award.title}:</strong> {award.albums} ({award.metric})</p>
               ))}
             </div>
           </div>
