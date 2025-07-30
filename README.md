@@ -25,7 +25,7 @@ bundle install
 # Create and seed the SQLite database
 rails db:create && rails db:migrate && rails db:seed
 
-# Run on http://localhost:3001
+# Run on localhost, port 3001
 rails server -p 3001
 ```
 
@@ -38,9 +38,11 @@ cd swiftie-song-app/frontend
 # Install Node.js dependancies
 npm install
 
-# Run on http://localhost:3000 and open in web browser
+# Run on localhost, port 3000
 npm start -p 3000
 ```
+
+**Important note**: While opening http://localhost.:3000 in your web browser is the same as http://127.0.0.1.:3000, the Spotify integration with OAuth 2.0 requires the latter.
 
 ## Development Plan
 

@@ -6,15 +6,20 @@ const useHomePageData = () => {
   const metadata = getMetadata();
   const [albumSummaries, setAlbumSummaries] = useState([]);
   const [awards, setAwards] = useState({});
+  const [csrfToken, setCsrfToken] = useState('');
   const [error, setError] = useState(null);
 
 
   useEffect(() => {
     const fetchAlbumSummaries = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/me/album_summaries`, metadata);
-        setAlbumSummaries(response.data);
-        calculateAwards(response.data);
+        const albumSummariesResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/me/album_summaries`, metadata);
+        setAlbumSummaries(albumSummariesResponse.data);
+        calculateAwards(albumSummariesResponse.data);
+
+        // Mpve to another function???
+        const csrfResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/csrf-token`, metadata);
+        setCsrfToken(csrfResponse.data.csrf_token);
       } catch (err) {
         console.error('Error fetching album summaries:', err.response || err);
         setError('Failed to fetch data. Please try again later.');
@@ -70,7 +75,7 @@ const useHomePageData = () => {
     setAwards(awards);
   };
 
-  return { albumSummaries, awards, error };
+  return { albumSummaries, awards, csrfToken, error };
 };
 
 export default useHomePageData;

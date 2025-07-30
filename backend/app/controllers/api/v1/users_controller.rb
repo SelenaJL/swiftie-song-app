@@ -1,4 +1,4 @@
-class Api::V1::UsersController < ApplicationController
+class Api::V1::UsersController < Api::ApiController
   before_action :authenticate_request!
 
   def album_summaries
@@ -36,6 +36,14 @@ class Api::V1::UsersController < ApplicationController
     render json: album_summaries
   end
 
+  def spotify_token
+    if current_user.spotify_token_expired?
+      current_user.refresh_spotify_token!
+    end
+
+    render json: { access_token: current_user.spotify_access_token }
+  end
+  
   private
 
   def tier_values

@@ -1,4 +1,4 @@
-class Api::V1::AlbumsController < ApplicationController
+class Api::V1::AlbumsController < Api::ApiController
   def index
     @albums = Album.all.order(:id)
     render json: @albums

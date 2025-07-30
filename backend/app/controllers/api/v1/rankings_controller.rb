@@ -1,4 +1,4 @@
-class Api::V1::RankingsController < ApplicationController
+class Api::V1::RankingsController < Api::ApiController
   before_action :authenticate_request!
 
   def index

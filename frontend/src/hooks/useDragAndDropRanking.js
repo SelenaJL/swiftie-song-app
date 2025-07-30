@@ -30,7 +30,7 @@ const useDragAndDropRanking = (currentRankedSongsByTier, currentUnrankedSongs, s
       newUnrankedSongs.splice(destination.index, 0, removed);
       if (removed.rankingId) { // If moved from ranked to unranked, delete old ranking
         try {
-          await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/rankings/${removed.rankingId}`, metadata);
+          await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/v1/rankings/${removed.rankingId}`, metadata);
           console.log('Ranking deleted successfully!');
           removed.rankingId = null;
         } catch (error) {
@@ -42,7 +42,7 @@ const useDragAndDropRanking = (currentRankedSongsByTier, currentUnrankedSongs, s
       newRankedSongsByTier[targetTierId].splice(destination.index, 0, removed);
       if (!removed.rankingId) { // If moved from unranked to ranked, create new ranking
         try {
-          const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/rankings`, {
+          const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/v1/rankings`, {
             ranking: {
               song_id: parseInt(draggableId),
               tier_id: targetTierId,
@@ -55,7 +55,7 @@ const useDragAndDropRanking = (currentRankedSongsByTier, currentUnrankedSongs, s
         }
       } else { // If moved between ranked tiers, update existing ranking
         try {
-          const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/rankings/${removed.rankingId}`, {
+          const response = await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/api/v1/rankings/${removed.rankingId}`, {
             ranking: {
               tier_id: targetTierId,
             }

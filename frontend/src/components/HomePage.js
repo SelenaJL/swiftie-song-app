@@ -1,13 +1,14 @@
 // frontend/src/components/HomePage.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getPaleColor } from '../utils/colorUtils';
 import '../HomePage.css';
 import useHomePageData from '../hooks/useHomePageData';
+import axios from 'axios';
 
 function HomePage() {
   const navigate = useNavigate();
-  const { albumSummaries, awards, error } = useHomePageData();
+  const { albumSummaries, awards, csrfToken, error } = useHomePageData();
   const name = localStorage.getItem('name');
   const possessive_name = name.endsWith('s') ? `${name}'` : `${name}'s`;
 
@@ -23,10 +24,39 @@ function HomePage() {
     return <div className="home-loading">Loading user data...</div>;
   }
 
+  // Does it matter which way I send the request??? Button with axios, button with fetch, form submission...
+  const tempSendReq = async () => {
+    const formData = new FormData();
+    formData.append('authenticity_token', csrfToken);
+    const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/spotify`, formData, {
+      headers: {
+        // 'Content-Type': 'application/x-www-form-urlencoded', # From Spotify docs???
+        'X-CSRF-Token': csrfToken,
+      },
+      // withCredentials: # Necessary???
+    });
+    console.log('Response:', response.data);
+    // fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/spotify`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'X-CSRF-Token': csrfToken,
+    //   },
+    // })
+    // .then(response => response.json())
+    // .then(data => console.log('Response:', data))
+    // .catch(error => console.error('Error:', error));
+  }
+
   return (
     <div className="background-container">
       <div className="topbar">
         <button onClick={handleLogout} className="logout-button">Logout</button>
+        <button onClick={tempSendReq} className="spotify-button">Connect to Spotify (Button)</button>
+        <form action={`${process.env.REACT_APP_API_BASE_URL}/auth/spotify`} method="post" style={{display: 'inline'}}>
+          {csrfToken && <input type="hidden" name="authenticity_token" value={csrfToken} />}
+          <button type="submit" className="spotify-button">Connect to Spotify (Form)</button>
+        </form>
         <h1 className="home-title">{possessive_name} Swiftie Analysis</h1>
       </div> 
       <div className="home-page-container">     

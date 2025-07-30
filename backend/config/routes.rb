@@ -5,17 +5,22 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
+  get '/csrf-token', to: 'application#csrf_token'
+  get '/auth/spotify/callback', to: 'spotify#callback'
+  
+
   namespace :api do
     namespace :v1 do
+      post '/register', to: 'authentication#register'
+      post '/login', to: 'authentication#login'
+      get '/me/spotify_token', to: 'users#spotify_token'
+      get '/me/album_summaries', to: 'users#album_summaries'
       resources :tiers, only: [:index]
       resources :albums, only: [:index, :show] do
         get 'songs', on: :member
         resources :rankings, only: [:index]
       end
       resources :rankings, only: [:create, :update, :destroy]
-      post '/register', to: 'authentication#register'
-      post '/login', to: 'authentication#login'
-      get '/me/album_summaries', to: 'users#album_summaries'
     end
   end
 
