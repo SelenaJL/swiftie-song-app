@@ -59,7 +59,7 @@ describe('LoginPage', () => {
 
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalledWith(
-        `${process.env.REACT_APP_API_BASE_URL}/login`,
+        `${process.env.REACT_APP_API_URL}/login`,
         { email: 'test@example.com', password: 'password' }
       );
     });

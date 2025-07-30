@@ -65,7 +65,7 @@ describe('SignupPage', () => {
     });
 
     expect(axios.post).toHaveBeenCalledWith(
-      `${process.env.REACT_APP_API_BASE_URL}/register`,
+      `${process.env.REACT_APP_API_URL}/register`,
       {
         name: 'Test User',
         email: 'test@example.com',
@@ -74,7 +74,7 @@ describe('SignupPage', () => {
       }
     );
     expect(axios.post).toHaveBeenCalledWith(
-      `${process.env.REACT_APP_API_BASE_URL}/login`,
+      `${process.env.REACT_APP_API_URL}/login`,
       { email: 'test@example.com', password: 'password' }
     );
     expect(localStorageMock.setItem).toHaveBeenCalledWith('token', 'mock_token');

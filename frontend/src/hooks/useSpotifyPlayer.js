@@ -11,7 +11,7 @@ const useSpotifyPlayer = () => {
 
   const getSpotifyToken = useCallback(async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/me/spotify_token`, metadata);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/me/spotify_token`, metadata);
       return response.data.access_token;
     } catch (error) {
       console.error('Error fetching Spotify token:', error);

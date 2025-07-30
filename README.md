@@ -106,7 +106,7 @@ Generated with the help of Gemini CLI.
     * [ ] **CORS:** Update the CORS configuration in `config/initializers/cors.rb` to allow requests from the frontend's production domain.
 
 10. **Frontend Preparation:**
-    * [ ] **API URL:** Use an environment variable (e.g., `REACT_APP_API_BASE_URL`) to point to the deployed backend API, allowing the app to switch between `localhost` for development and the live URL for production.
+    * [ ] **API URL:** Use an environment variable (e.g., `REACT_APP_API_URL`) to point to the deployed backend API, allowing the app to switch between `localhost` for development and the live URL for production.
     * [ ] **Build:** Create an optimized production build by running `npm run build`. This generates a `build` directory with static assets for deployment.
 
 11. **Hosting:**

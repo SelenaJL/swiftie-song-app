@@ -12,7 +12,7 @@ jest.mock('react-router-dom', () => ({
   useNavigate: jest.fn(),
 }));
 
-process.env.REACT_APP_API_BASE_URL = 'http://localhost:3001/api/v1';
+process.env.REACT_APP_API_URL = 'http://localhost:3001/api/v1';
 
 describe('AlbumPage', () => {
   beforeEach(() => {

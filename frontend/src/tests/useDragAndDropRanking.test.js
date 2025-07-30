@@ -4,7 +4,7 @@ import axios from 'axios';
 import useDragAndDropRanking from '../hooks/useDragAndDropRanking';
 
 jest.mock('axios');
-process.env.REACT_APP_API_BASE_URL = 'http://localhost:3001/api/v1';
+process.env.REACT_APP_API_URL = 'http://localhost:3001/api/v1';
 
 describe('useDragAndDropRanking', () => {
   let songsById;
@@ -96,7 +96,7 @@ describe('useDragAndDropRanking', () => {
       2: [],
     });
     expect(axios.post).toHaveBeenCalledWith(
-      `${process.env.REACT_APP_API_BASE_URL}/rankings`,
+      `${process.env.REACT_APP_API_URL}/rankings`,
       { ranking: { song_id: 101, tier_id: 1, user_id: 1 } },
       metadata
     );
@@ -137,7 +137,7 @@ describe('useDragAndDropRanking', () => {
       2: [{ id: 101, title: 'Song A', rankingId: 2001 }],
     });
     expect(axios.patch).toHaveBeenCalledWith(
-      `${process.env.REACT_APP_API_BASE_URL}/rankings/2001`,
+      `${process.env.REACT_APP_API_URL}/rankings/2001`,
       { ranking: { tier_id: 2, user_id: 1 } },
       metadata
     );
@@ -178,7 +178,7 @@ describe('useDragAndDropRanking', () => {
     ]);
     expect(setRankedSongsByTier).toHaveBeenCalledWith({ 1: [], 2: [] });
     expect(axios.delete).toHaveBeenCalledWith(
-      `${process.env.REACT_APP_API_BASE_URL}/rankings/2001`,
+      `${process.env.REACT_APP_API_URL}/rankings/2001`,
       metadata
     );
     expect(axios.post).not.toHaveBeenCalled();

@@ -1,2 +1,2 @@
-class Api::V1::SongsController < Api::ApiController
+class Api::V1::SongsController < ApplicationController
 end

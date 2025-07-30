@@ -21,10 +21,10 @@ const useAlbumData = (albumId) => {
           return;
         }
 
-        const tiersResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/tiers`);
-        const albumResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/albums/${albumId}`);
-        const songsResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/albums/${albumId}/songs`);
-        const rankingsResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/albums/${albumId}/rankings`, metadata);
+        const tiersResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/tiers`);
+        const albumResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/albums/${albumId}`);
+        const songsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/albums/${albumId}/songs`);
+        const rankingsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/albums/${albumId}/rankings`, metadata);
 
         const songs = songsResponse.data;
         const songsById = songs.reduce((acc, song) => {

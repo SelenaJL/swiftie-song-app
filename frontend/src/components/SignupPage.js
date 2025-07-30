@@ -18,7 +18,7 @@ function SignupPage() {
     setError('');
     setSuccess('');
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/v1/register`, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/register`, {
         name,
         email,
         password,
@@ -26,7 +26,7 @@ function SignupPage() {
       });
       setSuccess(response.data.message || 'Registration successful!');
       // Automatically log the user in after registration
-      const loginResponse = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/v1/login`, { email, password });
+      const loginResponse = await axios.post(`${process.env.REACT_APP_API_URL}/api/v1/login`, { email, password });
       localStorage.setItem('token', loginResponse.data.token);
       localStorage.setItem('name', response.data.user.name);
       navigate('/');

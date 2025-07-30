@@ -1,4 +1,4 @@
-class Api::V1::UsersController < Api::ApiController
+class Api::V1::UsersController < ApplicationController
   before_action :authenticate_request!
 
   def album_summaries
