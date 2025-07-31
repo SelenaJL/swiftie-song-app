@@ -1,48 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getPaleColor } from '../utils/colorUtils';
 import '../HomePage.css';
 import useHomePageData from '../hooks/useHomePageData';
 
 function HomePage() {
-  const navigate = useNavigate();
-  const { albumSummaries, awards, error } = useHomePageData();
+  const { albumSummaries, awards, error, handleLogout, handleSpotifyConnect } = useHomePageData();
   const name = localStorage.getItem('name');
   const possessive_name = name.endsWith('s') ? `${name}'` : `${name}'s`;
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('name');
-    navigate('/login');
-  };
-
-  const generateState = () => {
-    let randomString = '';
-
-    for (let i = 0; i < 16; i++) {
-      const isUppercase = Math.random() < 0.5;
-      // Uppercase: 65-90, Lowercase: 97-122
-      const charCode = isUppercase
-        ? Math.floor(Math.random() * 26) + 65
-        : Math.floor(Math.random() * 26) + 97;
-      randomString += String.fromCharCode(charCode);
-    }
-
-    return randomString + "token=" + localStorage.getItem('token');
-  };
-
-  const handleSpotifyConnect = () => {
-    const scope = 'user-read-private user-read-email streaming user-modify-playback-state';
-    const spotifyAuthUrl =
-      `https://accounts.spotify.com/authorize?` +
-      `response_type=code&` +
-      `client_id=${process.env.REACT_APP_SPOTIFY_CLIENT_ID}&` +
-      `scope=${encodeURIComponent(scope)}&` +
-      `redirect_uri=${encodeURIComponent(process.env.REACT_APP_API_URL + '/auth/spotify/callback')}&` +
-      `state=${generateState()}`
-
-    window.location.href = spotifyAuthUrl;
-  };
 
   if (error) {
     return <div className="home-error">{error}</div>;

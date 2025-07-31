@@ -36,6 +36,25 @@ class Api::V1::UsersController < ApplicationController
     render json: album_summaries
   end
 
+  def authorize_spotify
+    # Generate a random state string to prevent CSRF attacks
+    state = SecureRandom.hex(16)
+    session[:spotify_auth_state] = { user_id: current_user.id, state: state }
+    # request.session.commit! # not a valid method in ActionDispatch::Request::Session
+    # session.id # Force session to be loaded and marked as dirty
+
+    scope = 'user-read-private user-read-email streaming user-modify-playback-state'
+    spotify_auth_url =
+      "https://accounts.spotify.com/authorize?" +
+      "response_type=code&" +
+      "client_id=#{Rails.application.credentials.spotify_client_id}&" +
+      "scope=#{CGI.escape(scope)}&" +
+      "redirect_uri=#{CGI.escape(ENV['SPOTIFY_REDIRECT_URI'])}&" +
+      "state=#{state}"
+
+    render json: spotify_auth_url
+  end
+
   def spotify_token
     if current_user.spotify_token_expired?
       current_user.refresh_spotify_token!

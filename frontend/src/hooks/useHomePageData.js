@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getMetadata } from '../utils/apiUtils';
 
 const useHomePageData = () => {
   const metadata = getMetadata();
+  const navigate = useNavigate();
   const [albumSummaries, setAlbumSummaries] = useState([]);
   const [awards, setAwards] = useState({});
   const [error, setError] = useState(null);
@@ -70,7 +72,23 @@ const useHomePageData = () => {
     setAwards(awards);
   };
 
-  return { albumSummaries, awards, error };
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('name');
+    navigate('/login');
+  };
+
+  const handleSpotifyConnect = useCallback(async () => {
+    try {
+      const spotifyResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/me/authorize_spotify`, metadata);
+      window.location.href = spotifyResponse.data; // get? post? can rails just do this???
+    } catch (err) {
+      console.error('Error connecting to Spotify:', err.response || err);
+      setError('Failed to connect to Spotify. Please try again later.');
+    }
+  }, [metadata]);
+
+  return { albumSummaries, awards, error, handleLogout, handleSpotifyConnect };
 };
 
 export default useHomePageData;
