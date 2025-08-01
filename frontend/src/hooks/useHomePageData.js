@@ -81,7 +81,7 @@ const useHomePageData = () => {
   const handleSpotifyConnect = useCallback(async () => {
     try {
       const spotifyResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/v1/me/authorize_spotify`, metadata);
-      window.location.href = spotifyResponse.data; // get? post? can rails just do this???
+      window.location.href = spotifyResponse.data;
     } catch (err) {
       console.error('Error connecting to Spotify:', err.response || err);
       setError('Failed to connect to Spotify. Please try again later.');

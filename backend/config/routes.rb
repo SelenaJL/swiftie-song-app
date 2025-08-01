@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get '/spotify/callback', to: 'spotify#callback'
+  get '/spotify/callback2', to: 'spotify#callback2'
   
   namespace :api do
     namespace :v1 do

@@ -9,7 +9,7 @@ class User < ApplicationRecord
   end
 
   def refresh_spotify_token!
-    new_token_info = RSpotify.get_new_access_token(spotify_refresh_token)
+    new_token_info = RSpotify.get_new_access_token(spotify_refresh_token) # TODO: Don't use RSpotify???
     update!(
       spotify_access_token: new_token_info['access_token'],
       spotify_token_expires_at: Time.now + new_token_info['expires_in'].seconds

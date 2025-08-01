@@ -8,12 +8,16 @@ class SpotifyController < ApplicationController
     state = params[:state]
 
     # Verify state to prevent CSRF attacks and and clear stored state to prevent replay attacks
-    puts "session: #{session[:spotify_auth_state]}"
-    stored_state_info = session[:spotify_auth_state]
-    session.delete(:spotify_auth_state)
+    # stored_state_info = session[:spotify_auth_state]
+    # session.delete(:spotify_auth_state)
+
+    stored_state_info = Rails.cache.read("spotify_auth")
 
     puts "stored state: #{stored_state_info}"
     puts "state: #{state}"
+
+    # raise RuntimeError
+
     if stored_state_info.nil? || state != stored_state_info[:state]
       redirect_to "#{ENV['FRONTEND_URL']}/?spotify_connected=false&error=state_mismatch"
       return
@@ -51,5 +55,9 @@ class SpotifyController < ApplicationController
     else
       redirect_to "#{ENV['FRONTEND_URL']}/?spotify_connected=false&error=#{token_data["error"]}"
     end
+  end
+
+  def callback2
+    puts "IN CALLBACK 2"
   end
 end

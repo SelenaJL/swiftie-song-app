@@ -30,7 +30,8 @@ module Backend
     config.api_only = true
 
     # Add session management for OAuth state
-    config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore, key: '_spotify_session', same_site: :none, secure: true
+    # config.middleware.use ActionDispatch::Cookies
+    # config.middleware.use ActionDispatch::Session::CookieStore, key: '_spotify_session' #, same_site: :none, secure: true
+    config.middleware.use ActionDispatch::Session::CacheStore
   end
 end
