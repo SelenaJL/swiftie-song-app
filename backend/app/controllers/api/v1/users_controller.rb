@@ -39,11 +39,10 @@ class Api::V1::UsersController < ApplicationController
   def authorize_spotify
     # Generate a random state string to prevent CSRF attacks
     state = SecureRandom.hex(16)
-    # session[:spotify_auth_state] = { user_id: current_user.id, state: state }
     Rails.cache.write("spotify_auth", { user_id: current_user.id, state: state })
 
     scope = 'user-read-private user-read-email streaming user-modify-playback-state'
-    spotify_request =
+    request =
       "https://accounts.spotify.com/authorize?" +
       "response_type=code&" +
       "client_id=#{Rails.application.credentials.spotify_client_id}&" +
@@ -51,14 +50,11 @@ class Api::V1::UsersController < ApplicationController
       "redirect_uri=#{CGI.escape(ENV['SPOTIFY_REDIRECT_URI'])}&" +
       "state=#{state}"
 
-    # uri = URI(spotify_request)
-    # response = Net::HTTP.get_response(uri)
-    # redirect_to uri, allow_other_host: true
-
-    render json: spotify_request
+    render json: { request: request }
   end
 
   def spotify_token
+    # TODO: empty, expired, good.
     if current_user.spotify_token_expired?
       current_user.refresh_spotify_token!
     end
